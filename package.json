@@ -1,0 +1,24 @@
+{
+  "name": "project-for-testing",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "",
+  "main": "project.js",
+  "scripts": {
+    "start": "node server.js",
+    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
+    "test:coverage": "node --experimental-vm-modules node_modules/jest/bin/jest.js --coverage"
+  },
+  "keywords": [],
+  "author": "Dimitar Atanasov",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^5.1.1",
+    "dotenv": "^16.5.0",
+    "express": "^5.1.0",
+    "mongoose": "^8.16.1"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0"
+  }
+}
