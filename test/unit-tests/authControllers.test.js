@@ -1,8 +1,8 @@
-import { afterEach, beforeAll, describe, jest } from '@jest/globals';
+import { jest } from '@jest/globals';
 import { mockRequest, mockResponse } from '../mockFunctions.js';
 
 let registerUserService, loginUserService;
-let registerUserController, loginUserServiceController
+let registerUserController, loginUserController
 
 beforeAll(async () => {
     jest.unstable_mockModule('../../services/registerUserService.js', () => ({
@@ -16,7 +16,7 @@ beforeAll(async () => {
     ({ registerUserService } = await import('../../services/registerUserService.js'));
     ({ loginUserService } = await import('../../services/loginUserService.js'));
 
-    ({ registerUserController, loginUserServiceController } = await import('../../controllers/authControllers.js'))
+    ({ registerUserController, loginUserController } = await import('../../controllers/authControllers.js'))
 });
 
 afterEach(() => {
@@ -26,7 +26,7 @@ describe("Register controller unit test", () => {
     it("Should return 201 on successful registration", async () => {
         const req = mockRequest();
         req.body = {
-            username: "User1",
+            username: "User11",
             password: "Test123",
             confirmPassword: "Test123",
             firstName: "User",
@@ -40,7 +40,7 @@ describe("Register controller unit test", () => {
         registerUserService.mockResolvedValue({
             status: 201,
             message: "Successful registration",
-            user: { username: "User1" }
+            user: { username: "User11" }
         });
 
         await registerUserController(req, res);
@@ -49,7 +49,7 @@ describe("Register controller unit test", () => {
         expect(res.status).toHaveBeenCalledWith(201);
         expect(res.json).toHaveBeenCalledWith({
             message: "Successful registration",
-            user: { username: "User1" }
+            user: { username: "User11" }
         });
     });
     it("Should throw 404 with invalid age input", async () => {
@@ -107,7 +107,7 @@ describe("Register controller unit test", () => {
                 status: 200,
                 message: "Login successful"
             });
-            await loginUserServiceController(req, res);
+            await loginUserController(req, res);
 
             expect(loginUserService).toHaveBeenCalledWith(req.body);
             expect(res.status).toHaveBeenCalledWith(200);
@@ -122,7 +122,7 @@ describe("Register controller unit test", () => {
 
             loginUserService.mockRejectedValue({ message: "Invalid password", status: 404 });
 
-            await loginUserServiceController(req, res);
+            await loginUserController(req, res);
 
             expect(res.status).toHaveBeenCalledWith(404);
             expect(res.json).toHaveBeenCalledWith({ error: "Invalid password" });
@@ -132,13 +132,13 @@ describe("Register controller unit test", () => {
             req.body = { username: "WrongUser", password: "WrongPass" };
             const res = mockResponse();
 
-            // Симулация на грешка с .status
+            
             loginUserService.mockRejectedValue({
                 message: "Invalid credentials",
                 status: 401
             });
 
-            await loginUserServiceController(req, res);
+            await loginUserController(req, res);
 
             expect(res.status).toHaveBeenCalledWith(401);
             expect(res.json).toHaveBeenCalledWith({ error: "Invalid credentials" });
@@ -151,7 +151,7 @@ describe("Register controller unit test", () => {
 
             loginUserService.mockRejectedValue(new Error("Something broke"));
 
-            await loginUserServiceController(req, res);
+            await loginUserController(req, res);
 
             expect(res.status).toHaveBeenCalledWith(400);
             expect(res.json).toHaveBeenCalledWith({ error: "Something broke" });

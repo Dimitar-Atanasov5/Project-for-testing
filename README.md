@@ -24,13 +24,19 @@ Create a `.env` file in the root folder with the following variables:
 
 env
 PORT=3000
-DB_URI=mongodb://localhost:27017/your-db   
+DB_URI=mongodb://localhost:27017/your-db  
+JWT_SECRET=Secretkey223 
+
+env.test
+NODE_ENV=test
+JWT_SECRET=testSecret123
+
 
 # Testing plan
 - ✅ Unit tests: Jest
-- 🧩 Integration tests: Coming up
+- 🧩 Integration tests: Coming up with Supertest
 - 🔌 API tests: Planned with Postman
-- 🖥️ System testing: Planned with JMeter
+- 🖥️ System testing/performance/: Planned with JMeter
 - 🎯 E2E testing:
 - Selenium (planned)
 - Playwright (planned)

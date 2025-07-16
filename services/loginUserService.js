@@ -1,6 +1,7 @@
 import { users } from '../data/users.js';
 import bcrypt from 'bcrypt';
 import { HttpError } from '../helpers.js'
+import jwt from 'jsonwebtoken';
 
 export async function loginUserService(username, password) {
     if (!username?.trim() || !password?.trim()) {
@@ -16,8 +17,15 @@ export async function loginUserService(username, password) {
     if (!isPasswordMatch) {
         throw new HttpError(404, "Invalid password");
     }
+    const token = jwt.sign(
+        { username: user.username },
+        process.env.JWT_SECRET,
+        { expiresIn: '1h' }
+    );
+
     return {
         status: 200,
-        message: "Login successful"
+        message: "Login successful",
+        token
     };
 };

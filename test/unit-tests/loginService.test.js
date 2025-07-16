@@ -35,10 +35,13 @@ describe("Login service tests", () => {
         const username = "Dimitar1";
         const password = "Password1";
 
-        await expect(loginUserService(username, password)).resolves.toMatchObject({
-            status: 200,
-            message: "Login successful"
-        });
+        await expect(loginUserService(username, password)).resolves.toEqual(
+            expect.objectContaining({
+                status: 200,
+                message: "Login successful",
+                token: expect.any(String)
+            })
+        );
     });
     it("Should return 404 with non existing user", async () => {
         const invalidUserName = "Miro123";

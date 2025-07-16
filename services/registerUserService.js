@@ -96,7 +96,11 @@ export async function registerUserService(data) {
         const hashedPassword = await bcrypt.hash(passwordTrimmed, 8);
         const newUser = { username: usernameTrimmed, password: hashedPassword };
         users.push(newUser);
-        return { status: 201, message: "Successful registration" };
+        return {
+            status: 201,
+            message: "Successful registration",
+            user: newUser
+        };
 
     } catch (error) {
         if (error instanceof HttpError) {
