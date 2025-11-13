@@ -10,6 +10,7 @@ export async function registerUserController(req, res) {
         });
 
     } catch (error) {
+        console.error("REGISTER ERROR", error);
         res.status(error.status || 500).json({ error: error.errors || error.message || "Server error" });
     };
 };

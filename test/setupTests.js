@@ -26,3 +26,4 @@ afterAll(async () => {
   await mongo.stop();
 });
 
+console.log("JWT_SECRET (loaded via setupTests):", process.env.JWT_SECRET);

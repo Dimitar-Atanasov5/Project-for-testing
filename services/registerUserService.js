@@ -17,13 +17,13 @@ export async function registerUserService(data) {
             email
         } = data;
 
-        const usernameTrimmed = username?.trim();
-        const passwordTrimmed = password?.trim();
-        const confirmPasswordTrimmed = confirmPassword?.trim();
-        const firstNameTrimmed = firstName?.trim();
-        const lastNameTrimmed = lastName?.trim();
-        const ageTrimmed = age?.trim();
-        const emailTrimmed = email?.trim();
+        const usernameTrimmed = String(username || "").trim();
+        const passwordTrimmed = String(password || "").trim();
+        const confirmPasswordTrimmed = String(confirmPassword || "").trim();
+        const firstNameTrimmed = String(firstName || "").trim();
+        const lastNameTrimmed = String(lastName || "").trim();
+        const ageTrimmed = String(age || "").trim();
+        const emailTrimmed = String(email || "").trim();
 
         if (!usernameTrimmed) errors.push("Username is required");
         if (!passwordTrimmed) errors.push("Password is required");
@@ -101,7 +101,7 @@ export async function registerUserService(data) {
             message: "Successful registration",
             user: newUser
         };
-
+        
     } catch (error) {
         if (error instanceof HttpError) {
             throw error;
